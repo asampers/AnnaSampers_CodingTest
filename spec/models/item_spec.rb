@@ -39,5 +39,16 @@ RSpec.describe Item, type: :model do
     end
   end
 
+  describe "#restore" do
+    before { item2.restore }
 
+    it "updates deleted_at attribute to nil" do
+      expect(item2.deleted_at).to be_nil
+    end
+
+    it "restores item into default scope" do
+      expect(Item.all).to include(item2)
+      expect(Item.all.length).to eq(2)
+    end
+  end
 end
