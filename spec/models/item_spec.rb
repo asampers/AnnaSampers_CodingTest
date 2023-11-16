@@ -27,5 +27,17 @@ RSpec.describe Item, type: :model do
     end
   end
 
+  describe "#soft_delete" do
+    before { item.soft_delete }
+    
+    it "updates deleted_at attribute to current timestamp" do
+      expect(item.deleted_at.utc.to_s).to eq(Time.now.utc.to_s)
+    end
+
+    it "removes the item from the default scope" do
+      expect(Item.all).to be_empty
+    end
+  end
+
 
 end
